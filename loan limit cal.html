@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loan Limit Calculator</title>
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto; 
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
+    h3 {
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>TBs Loan Limit Calculator</h2>
+
+  <label for="name">Fellow's Name:</label>
+  <input type="text" id="name" placeholder="Enter name">
+
+  <label for="cs">Credit Score (CS):</label>
+  <input type="number" id="cs" placeholder="Enter CS (e.g. 20)">
+
+  <label for="rs">Reliability Score (RS):</label>
+  <input type="number" id="rs" placeholder="Enter RS (e.g. 100)">
+
+  <button onclick="calculateLoan()">Calculate Loan Limit</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function calculateLoan() {
+      const name = document.getElementById("name").value.trim();
+      const cs = parseInt(document.getElementById("cs").value);
+      const rs = parseInt(document.getElementById("rs").value);
+
+      if (!name || isNaN(cs) || isNaN(rs)) {
+        document.getElementById("result").innerText = "Please enter all fields correctly.";
+        return;
+      }
+
+      let csAmount = 0;
+      let rsAmount = 0;
+
+      // CS Calculation
+      if (cs === 0) csAmount = 20000;
+      else if (cs === 10) csAmount = 40000;
+      else if (cs >= 20) csAmount = 70000 + Math.floor((cs - 20) / 10) * 30000;
+
+      // RS Calculation
+      if (rs === 50) rsAmount = 30000;
+      else if (rs === 75) rsAmount = 45000;
+      else if (rs >= 100) rsAmount = 95000 + Math.floor((rs - 100) / 25) * 50000;
+
+      const total = csAmount + rsAmount;
+
+      document.getElementById("result").innerText =
+        `${name} is eligible for a loan limit of ₦${total.toLocaleString()}`;
+    }
+  </script>
+</body>
+</html>
